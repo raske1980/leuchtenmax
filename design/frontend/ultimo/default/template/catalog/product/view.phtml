@@ -279,54 +279,75 @@
         <?php echo $this->getChildHtml('product_additional_data') ?>
 	</div> <!-- end: box-tabs -->
 	
-	
-	
-	<div id="categorycarouseldiv" style="float: left;width: 27%;margin-top: 8%;">
-		<?php
-			$_helper = $this->helper('catalog/output');
-			$_category_detail=Mage::registry('current_category');
-			$_productCollection = $_category_detail->getProductCollection();
-			//$_productCollection = $this->getItems();
-			$theme = $this->helper('ultimo');
+	<?php
+		$cats = $_product->getCategoryIds();
+		$_productCollection = array();
+		$currentCount = 0;
+		$catCount = count($cats);				
+		$category_id = $cats[1];
+		$_cat = Mage::getModel('catalog/category')->load($category_id);					
+		$cuurentCatProducts = $_cat->getProductCollection();
+		$cuurentCatProducts->addAttributeToSelect(array(
+								'image',
+								'small_image',
+                                'name',
+                                'short_description'
+							))				   
+							->addFieldToFilter('visibility', array(
+                               Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
+                               Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
+							)) 
+							->addFinalPrice()
+							->getSelect();
+		foreach($cuurentCatProducts as $catProd){				
+			array_push($_productCollection,$catProd);				
+		}				
+				
+		$_collectionSize = count($_productCollection);
+		
+		$theme = $this->helper('ultimo');
 			
-			//$_columnCount = 8; //Max number of products in a row
-			$imgWidth = 168;
-			$imgHeight = 168;
+		//$_columnCount = 8; //Max number of products in a row
+		$imgWidth = 168;
+		$imgHeight = 168;
 			
-			//Aspect ratio settings
-			if ($theme->getCfg('category/aspect_ratio'))
-				$imgHeight = 0; //Height will be computed automatically (based on width) to keep the aspect ratio
+		//Aspect ratio settings
+		if ($theme->getCfg('category/aspect_ratio'))
+			$imgHeight = 0; //Height will be computed automatically (based on width) to keep the aspect ratio
 
 			//Modify slider depending on number of slides
-			$sliderClasses = '';
-			if($_collectionSize > 0)
-			{
-				if($_collectionSize <= 5)
-					$sliderClasses .= " count-$_collectionSize";
-				else
-					$sliderClasses .= " count-multi";
-			}
-			
-			
-			
-			
-			
-
-		?>
-		<div class="block block-related-slider">
+		$sliderClasses = '';
+		if($_collectionSize > 0)
+		{
+			if($_collectionSize <= 5)
+				$sliderClasses .= " count-$_collectionSize";
+			else
+				$sliderClasses .= " count-multi";
+		}
+	?>	
+	
+	<style media="screen" type="text/css">		
+		div.viewport ul li {float:none !important;}		
+	</style>
+	
+	
+	<?php if($_collectionSize > 0): ?>
+	<div id="categorycarouseldiv" style="float: left;width: 27%;margin-top: 8%;">
+		
+	<div class="block block-related-slider">
 		<h3 class="section-title padding-right">Ähnliche Artikel</h3>
 		<div class="related-itemslider-wrapper itemslider-wrapper in-sidebar">
 
 			<div class="nav-wrapper gen-slider-arrows1 gen-slider-arrows1-pos-top-right">
 			</div>
 				
-			<div class="itemslider itemslider-horizontal itemslider-x<?php if($sliderClasses) echo $sliderClasses; ?>">
+			<div class="itemslider itemslider-vertical itemslider-x<?php if($sliderClasses) echo $sliderClasses; ?>">
 				<ul class="slides products-grid">
 					<?php foreach ($_productCollection as $_item): ?>
 						<li class="item">
 							<a href="<?php echo $_item->getProductUrl(); ?>" title="<?php echo $this->htmlEscape($_item->getName()); ?>" class="product-image">
 							
-								<img src="<?php echo $theme->getImgUrl($this, $_item, $imgWidth, $imgHeight, 'small_image'); ?>" alt="<?php echo $this->htmlEscape($_item->getName()); ?>" />
+								<img src="<?php echo Mage::helper('catalog/image')->init($_item, 'image')->resize(168,168);; ?>" alt="<?php echo $this->htmlEscape($_item->getName()); ?>" />
 
 							</a>
 							<h3 class="product-name"><a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->stripTags($_item->getName(), null, true) ?>"><?php echo $this->htmlEscape($_item->getName()); ?></a></h3>
@@ -372,9 +393,16 @@
 					
 					controlsContainer: ".related-itemslider-wrapper .nav-wrapper",
 					
-					itemWidth: 188
+					itemWidth: 188				
 				});
-			});
+								
+				//$('div.viewport ul').css('width','100% !important');
+				//$('div.viewport ul').css('height','720px !important');				
+				//$('div.viewport ul').width('100%');
+				//$('div.viewport ul').height('720px');
+				//$('div.viewport ul').css('overflow','hidden');				
+				
+			});			
 		//]]>
 		</script>
 
@@ -412,9 +440,12 @@
 					$('#categorycarouseldiv related-products-field').value = values.join(',');
 				}
 			}
+						
 		//]]>
 		</script>
+	
 	</div>
+	<?php endif; ?>
     
     <?php
 		if (isset($section['related']))
