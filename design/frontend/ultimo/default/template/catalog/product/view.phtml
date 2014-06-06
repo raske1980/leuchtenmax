@@ -332,16 +332,15 @@
 		#categorycarouseldiv div.itemslider-vertical {height: inherit !important;}
 		#categorycarouseldiv div.itemslider-wrapper {height: inherit !important;}
 		#categorycarouseldiv div.block-related-slider {height: inherit !important;}		
-		div.box-additional.box-tabs.grid-full {margin-right:0% !important;}
-		#categorycarouseldiv ul.direction-nav {top: -35px;right: 2px;}
+		div.box-additional.box-tabs.grid-full {margin-right:0% !important;}		
 	</style>
 	
 	
 	<?php if($_collectionSize > 0): ?>
-	<div id="categorycarouseldiv" style="float: left;width: 27%;margin-top: 8%;height: 750px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
+	<div id="categorycarouseldiv" style="float: left;width: 27%;margin-top: 8%;height: 400px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
 		
 	<div class="block block-related-slider">
-		<h3 class="section-title padding-right" style="border-top: 1px solid #e5e5e5;"><span style="margin-left: 25% !important;font: 90%/150% Arial, Helvetica, sans-serif;">Ähnliche Artikel</span></h3>
+		<h3 class="section-title padding-right" style="border-top: 1px solid #e5e5e5;"><span style="margin-left: 25% !important;font: 98%/150% Arial, Helvetica, sans-serif;line-height: 2.0em;">Ähnliche Artikel</span></h3>
 		<div class="related-itemslider-wrapper itemslider-wrapper in-sidebar">
 
 			<div class="nav-wrapper gen-slider-arrows1 gen-slider-arrows1-pos-top-right">
@@ -377,7 +376,7 @@
 			</div> <!-- end: itemslider -->
 
 		</div> <!-- end: related-itemslider-wrapper -->
-		<p class="block-subtitle"><?php echo $this->__('Check items to add to the cart or') ?>&nbsp;<a href="#" onclick="selectAllRelated(this); return false;"><?php echo $this->__('select all') ?></a></p>
+		<p class="block-subtitle" style="display:none"><?php echo $this->__('Check items to add to the cart or') ?>&nbsp;<a href="#" onclick="selectAllRelated(this); return false;"><?php echo $this->__('select all') ?></a></p>
 		</div> <!-- end: block -->
 		<script type="text/javascript">
 		//<![CDATA[
@@ -397,7 +396,7 @@
 					pauseOnHover: true,
 					controlNav: false,
 					
-					controlsContainer: ".related-itemslider-wrapper .nav-wrapper",
+					controlsContainer: "#categorycarouseldiv .related-itemslider-wrapper .nav-wrapper",
 					
 					itemWidth: 188				
 				});
