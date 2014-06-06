@@ -327,15 +327,21 @@
 	?>	
 	
 	<style media="screen" type="text/css">		
-		div.viewport ul li {float:none !important;}		
+		#categorycarouseldiv div.viewport ul {width: inherit !important;height: inherit !important;}
+		#categorycarouseldiv div.viewport {height: inherit !important;}
+		#categorycarouseldiv div.itemslider-vertical {height: inherit !important;}
+		#categorycarouseldiv div.itemslider-wrapper {height: inherit !important;}
+		#categorycarouseldiv div.block-related-slider {height: inherit !important;}		
+		div.box-additional.box-tabs.grid-full {margin-right:0% !important;}
+		#categorycarouseldiv ul.direction-nav {top: -35px;right: 2px;}
 	</style>
 	
 	
 	<?php if($_collectionSize > 0): ?>
-	<div id="categorycarouseldiv" style="float: left;width: 27%;margin-top: 8%;">
+	<div id="categorycarouseldiv" style="float: left;width: 27%;margin-top: 8%;height: 750px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
 		
 	<div class="block block-related-slider">
-		<h3 class="section-title padding-right">Ähnliche Artikel</h3>
+		<h3 class="section-title padding-right" style="border-top: 1px solid #e5e5e5;"><span style="margin-left: 25% !important;font: 90%/150% Arial, Helvetica, sans-serif;">Ähnliche Artikel</span></h3>
 		<div class="related-itemslider-wrapper itemslider-wrapper in-sidebar">
 
 			<div class="nav-wrapper gen-slider-arrows1 gen-slider-arrows1-pos-top-right">
