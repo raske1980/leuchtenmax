@@ -267,7 +267,7 @@
     <?php //Display collateral blocks
 		  //--------------------------------------------------------------------------- ?>
     
-	<div class="box-additional box-tabs <?php echo $tabsGridClass; ?>" style="width:70% !important;">
+	<div class="box-additional box-tabs <?php echo $tabsGridClass; ?>" style="width:65% !important;">
     	<?php $info_tabs_html = $this->getChildHtml('info_tabs');
 			if (trim($info_tabs_html)) echo $info_tabs_html; ?>
 
@@ -283,25 +283,31 @@
 		$cats = $_product->getCategoryIds();
 		$_productCollection = array();
 		$currentCount = 0;
-		$catCount = count($cats);				
-		$category_id = $cats[1];
-		$_cat = Mage::getModel('catalog/category')->load($category_id);					
-		$cuurentCatProducts = $_cat->getProductCollection();
-		$cuurentCatProducts->addAttributeToSelect(array(
-								'image',
-								'small_image',
-                                'name',
-                                'short_description'
-							))				   
-							->addFieldToFilter('visibility', array(
-                               Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
-                               Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
-							)) 
-							->addFinalPrice()
-							->getSelect();
-		foreach($cuurentCatProducts as $catProd){				
-			array_push($_productCollection,$catProd);				
-		}				
+		$catCount = count($cats);	
+		//foreach($cats as $catID){
+		//	$_cat = Mage::getModel('catalog/category')->load($catID);	
+		//	echo '<p>'.$_cat->getName().'</p>';
+		//}
+		if($catCount > 0){
+			$category_id = $cats[$catCount - 1];
+			$_cat = Mage::getModel('catalog/category')->load($category_id);					
+			$cuurentCatProducts = $_cat->getProductCollection();
+			$cuurentCatProducts->addAttributeToSelect(array(
+									'image',
+									'small_image',
+									'name',
+									'short_description'
+								))				   
+								->addFieldToFilter('visibility', array(
+								   Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
+								   Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
+								)) 
+								->addFinalPrice()
+								->getSelect();
+			foreach($cuurentCatProducts as $catProd){				
+				array_push($_productCollection,$catProd);				
+			}			
+		}			
 				
 		$_collectionSize = count($_productCollection);
 		
@@ -337,7 +343,7 @@
 	
 	
 	<?php if($_collectionSize > 0): ?>
-	<div id="categorycarouseldiv" style="float: left;width: 27%;margin-top: 8%;height: 400px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
+	<div id="categorycarouseldiv" style="float: left;width: 32%;margin-top: 8.4%;height: 400px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
 		
 	<div class="block block-related-slider">
 		<h3 class="section-title padding-right" style="border-top: 1px solid #e5e5e5;"><span style="margin-left: 25% !important;font: 98%/150% Arial, Helvetica, sans-serif;line-height: 2.0em;">Ähnliche Artikel</span></h3>
