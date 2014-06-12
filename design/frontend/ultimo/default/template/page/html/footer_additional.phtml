@@ -51,15 +51,27 @@
 	{
 		if ($(window).width() < 1024)
 		{
-			$('#mobnav').show();
-			$('.vertnav-top').addClass('mobile');
-			$('#nav').addClass('mobile');
+			//$('#mobnav').show();
+			//$('.vertnav-top').addClass('mobile');
+			//$('#nav').addClass('mobile'); 			
+			if ($(window).width() < 450){
+				$('ul#nav span').css({'font-size':'6px'});
+			}
+			else if ($(window).width() < 768){
+				$('ul#nav span').css({'font-size':'9px'});
+			}
+			else if ($(window).width() < 100){
+				$('ul#nav span').css({'font-size':'11px'});
+			}
 		}
 		else
 		{
 			$('#nav').removeClass('mobile');
 			$('.vertnav-top').removeClass('mobile');
 			$('#mobnav').hide();
+			
+			$('ul#nav').css({'margin-top':'1%'});
+			$('ul#nav span').css({'font-size':'16px'});
 		}
 	}
 	
