@@ -67,6 +67,16 @@
 	?>
 <?php endforeach; ?>
 
+<?php $_accessories = ''; ?>
+<?php foreach ($this->getTabs() as $_index => $_tab): ?>
+    <?php
+    	if($_tab['title'] == "Zubehör")
+		{
+			$_accessories .= trim($this->getChildHtml($_tab['alias']));			
+		}
+	?>
+<?php endforeach; ?>
+
 <?php $_additional = ''; ?>
 <?php foreach ($this->getTabs() as $_index => $_tab): ?>
     <?php
@@ -125,7 +135,7 @@
 		<?php //IMPORTANT: id "product-tabs" is being used in: /catalog/product/view.phtml, /review/helper/summary*_nolinks.phtml ?>
         <ul class="tabs clearer">
 			<?php foreach ($this->getTabs() as $_index => $_tab): ?>	
-				<?php if ($_tab['title'] == "Leuchtmittel" && $_leuchtmittel == ''): ?>	
+				<?php if (($_tab['title'] == "Leuchtmittel" && $_leuchtmittel == '') || ($_tab['title'] == "Zubehör" && $_accessories == '')): ?>	
 					<?php continue ?>				
 				<?php endif; ?>				
 				<?php if ($this->getChildHtml($_tab['alias']) && $_tab['title'] != "Zusatzinformation"): ?>

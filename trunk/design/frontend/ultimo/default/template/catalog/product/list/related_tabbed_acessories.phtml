@@ -27,9 +27,42 @@
 
 
 
-<?php if($_collectionSize = $this->getItems()->getSize()): ?>
 <?php
-	$_productCollection = $this->getItems();
+$productID = $this->getProduct()->getId();
+$currentProduct = $this->getProduct();		
+
+$relaccprodcoll = Mage::helper('customRelations/product')
+                    ->getRelatedProductCollection ($currentProduct, 'custom_product_accesories');	
+$relaccprodcoll->addAttributeToSelect(array(
+									'image',
+									'small_image',
+									'name',
+									'short_description'
+								))				   
+								->addFieldToFilter('visibility', array(
+								   Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH,
+								   Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG
+								)) 
+								->addFinalPrice()
+								->getSelect();
+			/*foreach($relaccprodcoll as $catProd){				
+				echo '<p>' . $catProd->getId() . '</p>'; 				
+			}*/								
+
+$accarray = array();
+ 
+foreach ($relaccprodcoll as $accproduct) {
+	//echo '<p>' . $accproduct->getId() . '</p>';
+	$accarray[] = $accproduct;
+}
+
+$arrcount = count($accarray);
+//echo '<p>' . $arrcount . '</p>';
+
+$sliderClasses = '';
+
+if($_collectionSize = $arrcount){
+	$_productCollection = $accarray;
 	$theme = $this->helper('ultimo');
 	
 	//$_columnCount = 8; //Max number of products in a row
@@ -48,16 +81,12 @@
 			$sliderClasses .= " count-$_collectionSize";
 		else
 			$sliderClasses .= " count-multi";		
-	}
-	
-	
-	
-	
-	
-
+	}			
+}
 ?>
-<div class="block block-related-slider">
-<h3 class="section-title padding-right"><?php echo str_replace("Verwandt","Passende Leuchtmittel",$this->__('Related Products')); ?></h3>
+
+<?php if($_collectionSize > 0): ?>
+<div id="accdivtab" class="block block-related-slider">
 <div class="related-itemslider-wrapper itemslider-wrapper in-sidebar">
 
 	<div class="nav-wrapper gen-slider-arrows1 gen-slider-arrows1-pos-top-right">
@@ -100,7 +129,7 @@
 	 jQuery(function($) {		
 				
 		
-		$('li#tab-Leuchtmittel').click(function () {
+		$('li#tab-Zubehör').click(function () {
 			 jQuery('.related-itemslider-wrapper .itemslider').flexslider({
 				namespace: "",
 				animation: "slide",
@@ -115,7 +144,7 @@
 				pauseOnHover: true,
 				controlNav: false,
 				
-				controlsContainer: "div.tabs-panels .related-itemslider-wrapper .nav-wrapper",
+				controlsContainer: "#accdivtab .related-itemslider-wrapper .nav-wrapper",
 				
 				itemWidth: 188				
 			});
@@ -163,3 +192,6 @@
 //]]>
 </script>
 <?php endif; ?>
+
+
+
