@@ -339,11 +339,15 @@
 		#categorycarouseldiv div.itemslider-wrapper {height: inherit !important;}
 		#categorycarouseldiv div.block-related-slider {height: inherit !important;}		
 		div.box-additional.box-tabs.grid-full {margin-right:0% !important;}		
-	</style>
-	
+		div.related-itemslider-wrapper h3.product-name,
+		div.upsell-itemslider-wrapper h3.product-name, 
+		#categorycarouseldiv h3.product-name 
+		{ font-size: 1.2em !important;margin-left:8% !important;}	
+		div.product-view div.product-name h1 { font-size: 2.0em !important;}	
+	</style>		
 	
 	<?php if($_collectionSize > 0): ?>
-	<div id="categorycarouseldiv" style="float: left;width: 32%;margin-top: 8.4%;height: 400px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
+	<div id="categorycarouseldiv" style="float: left;width: 32%;margin-top: 8.4%;margin-bottom:60px;height: 1000px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
 		
 	<div class="block block-related-slider">
 		<h3 class="section-title padding-right" style="border-top: 1px solid #e5e5e5;"><span style="margin-left: 25% !important;font: 98%/150% Arial, Helvetica, sans-serif;line-height: 2.0em;">Ähnliche Artikel</span></h3>
@@ -454,6 +458,19 @@
 						
 		//]]>
 		</script>
+		
+		<script type="text/javascript">
+		//<![CDATA[
+			jQuery(function($) {				
+				$("div#product-tabs h3.section-title").text("");	
+				var height = $("div#categorycarouseldiv h3.section-title").height();
+				var intHeight = parseInt(height);
+				var newHeightMinus = (intHeight/7)*3;
+				var newHeight  = intHeight - newHeightMinus;
+				$("div#product-tabs h3.section-title").height(newHeight);
+			});			
+		//]]>
+	</script>
 	
 	</div>
 	<?php endif; ?>
