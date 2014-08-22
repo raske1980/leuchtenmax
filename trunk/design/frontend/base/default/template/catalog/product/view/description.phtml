@@ -30,10 +30,315 @@
  * @see Mage_Catalog_Block_Product_View_Description
  */
 ?>
+
+<style media="screen" type="text/css">		
+		table#product-attribute-specs-table {display:none;}
+		div#descriptiondiv tr.odd {  }
+		div#descriptiondiv tr.even {background-color: #D7DBDE !important;}
+</style>		
+
 <?php $_description = $this->getProduct()->getDescription(); ?>
 <?php if ($_description): ?>
-    <h2><?php echo $this->__('Details') ?></h2>
-    <div class="std">
+    <h2 style="display:none;"><?php echo $this->__('Details') ?></h2>
+    <div class="std" id="descriptiondiv">
         <?php echo $this->helper('catalog/output')->productAttribute($this->getProduct(), $_description, 'description') ?>
+		<br/>
+		<br/>	
+
+		<?php
+			$leuchtmittel = $this->getProduct()->getResource()->getAttribute('leuchtmittel')->getFrontend()->getValue($this->getProduct());
+			$leuchtmittelinklusive = $this->getProduct()->getResource()->getAttribute('leuchtmittelinklusive')->getFrontend()->getValue($this->getProduct());
+			
+			if(!empty($leuchtmittel)){
+				echo '<label style="font-weight: bold;" >Leuchtmittel: </label>' . $leuchtmittel . '<br/><br/>';
+			}
+			
+			if(!empty($leuchtmittelinklusive)){
+				if($leuchtmittelinklusive == 'nein'){
+					echo 'Das Leuchtmittel ist nicht im Lieferumfang enthalten. <br/> <a id="leuchtmittelinklusivelink" style="color: #00a9c7 !important;cursor: pointer !important;">Zu den passenden Leuchtmitteln </a> <br/><br/>';
+				}
+				else if($leuchtmittelinklusive == 'ja'){
+					echo 'Das Leuchtmittel ist im Lieferumfang enthalten <br/><br/>';
+				}
+			}
+		?>
+		
+		<script type="text/javascript">
+		//<![CDATA[	
+			 jQuery(function($) {											
+				$('a#leuchtmittelinklusivelink').click(function (e) {
+					if($('#acctab-Leuchtmittel').length > 0){						
+						$('li#tab-Leuchtmittel').trigger('click');						
+						$("#product-tabs .tabs").data("tabs").click($("#tab-Leuchtmittel").index());
+					}										
+				});					
+			});
+		//]]>
+		</script>
+			
+		 <?php 		 
+				
+			$material = $this->getProduct()->getResource()->getAttribute('material')->getFrontend()->getValue($this->getProduct());
+			$farbe = $this->getProduct()->getResource()->getAttribute('farbe')->getFrontend()->getValue($this->getProduct());			
+			$fassung = $this->getProduct()->getResource()->getAttribute('fassung')->getFrontend()->getValue($this->getProduct());
+			$leistung = $this->getProduct()->getResource()->getAttribute('leistung')->getFrontend()->getValue($this->getProduct());
+			$betriebsspannung = $this->getProduct()->getResource()->getAttribute('betriebsspannung')->getFrontend()->getValue($this->getProduct());
+			$lange = $this->getProduct()->getResource()->getAttribute('lange')->getFrontend()->getValue($this->getProduct());
+			$breite = $this->getProduct()->getResource()->getAttribute('breite')->getFrontend()->getValue($this->getProduct());
+			$schwenkbereich = $this->getProduct()->getResource()->getAttribute('schwenkbereich')->getFrontend()->getValue($this->getProduct());
+			$drehbereich = $this->getProduct()->getResource()->getAttribute('drehbereich')->getFrontend()->getValue($this->getProduct());
+			$schutzklasse = $this->getProduct()->getResource()->getAttribute('schutzklasse')->getFrontend()->getValue($this->getProduct());
+			$einbautiefe = $this->getProduct()->getResource()->getAttribute('einbautiefe')->getFrontend()->getValue($this->getProduct());
+			$montageart = $this->getProduct()->getResource()->getAttribute('montageart')->getFrontend()->getValue($this->getProduct());
+			$bemerkung1 = $this->getProduct()->getResource()->getAttribute('bemerkung1')->getFrontend()->getValue($this->getProduct());
+			$bemerkung2 = $this->getProduct()->getResource()->getAttribute('bemerkung2')->getFrontend()->getValue($this->getProduct());
+			$bemerkung3 = $this->getProduct()->getResource()->getAttribute('bemerkung3')->getFrontend()->getValue($this->getProduct());
+			$bemessungsspannung = $this->getProduct()->getResource()->getAttribute('bemessungsspannung')->getFrontend()->getValue($this->getProduct());
+			
+			$startTableString = '<table class="data-table" ><colgroup><col width="25%"><col></colgroup><tbody>';
+			$endTableString = '</tbody></table>';
+			$tableString = '';
+			$first = 0;
+			$tableOdd = 'odd';
+			$tableEven = 'even';
+			
+			$tableString .= $startTableString;			
+			
+			if(!empty($material)){
+				$tableString .= '<tr class="first even"><th class="label">Material:</th><td class="data last">' . $material . '</td></tr>';
+				$first++;
+			}			
+
+			if(!empty($farbe)){
+				if($first > 0){
+					if ($first % 2 == 0) {						
+						$tableString .= '<tr class="even"><th class="label">Farbe:</th><td class="data last">' . $farbe . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Farbe:</th><td class="data last">' . $farbe . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Farbe:</th><td class="data last">' . $farbe . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($fassung)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Fassung:</th><td class="data last">' . $fassung . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Fassung:</th><td class="data last">' . $fassung . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Fassung:</th><td class="data last">' . $fassung . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($leistung)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Leistung:</th><td class="data last">' . $leistung . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Leistung:</th><td class="data last">' . $leistung . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Leistung:</th><td class="data last">' . $leistung . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($betriebsspannung)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Betriebsspannung:</th><td class="data last">' . $betriebsspannung . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Betriebsspannung:</th><td class="data last">' . $betriebsspannung . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Betriebsspannung:</th><td class="data last">' . $betriebsspannung . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($lange)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Länge:</th><td class="data last">' . $lange . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Länge:</th><td class="data last">' . $lange . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Länge:</th><td class="data last">' . $lange . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($breite)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Breite:</th><td class="data last">' . $breite . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Breite:</th><td class="data last">' . $breite . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Breite:</th><td class="data last">' . $breite . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($schwenkbereich)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Schwenkbereich:</th><td class="data last">' . $schwenkbereich . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Schwenkbereich:</th><td class="data last">' . $schwenkbereich . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Schwenkbereich:</th><td class="data last">' . $schwenkbereich . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($drehbereich)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Drehbereich:</th><td class="data last">' . $drehbereich . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Drehbereich:</th><td class="data last">' . $drehbereich . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Drehbereich:</th><td class="data last">' . $drehbereich . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($schutzklasse)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Schutzklasse:</th><td class="data last">' . $schutzklasse . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Schutzklasse:</th><td class="data last">' . $schutzklasse . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Schutzklasse:</th><td class="data last">' . $schutzklasse . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($einbautiefe)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Einbautiefe in mm:</th><td class="data last">' . $einbautiefe . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Einbautiefe in mm:</th><td class="data last">' . $einbautiefe . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Einbautiefe in mm:</th><td class="data last">' . $einbautiefe . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($montageart)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Montageart:</th><td class="data last">' . $montageart . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Montageart:</th><td class="data last">' . $montageart . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Montageart:</th><td class="data last">' . $montageart . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($bemerkung1)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Bemerkung 1:</th><td class="data last">' . $bemerkung1 . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Bemerkung 1:</th><td class="data last">' . $bemerkung1 . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Bemerkung 1:</th><td class="data last">' . $bemerkung1 . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($bemerkung2)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Bemerkung 2:</th><td class="data last">' . $bemerkung2 . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Bemerkung 2:</th><td class="data last">' . $bemerkung2 . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Bemerkung 2:</th><td class="data last">' . $bemerkung2 . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($bemerkung3)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Bemerkung 3:</th><td class="data last">' . $bemerkung3 . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Bemerkung 3:</th><td class="data last">' . $bemerkung3 . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Bemerkung 3:</th><td class="data last">' . $bemerkung3 . '</td></tr>';
+				}
+				$first++;
+			}			
+			
+			if(!empty($bemessungsspannung)){
+				if($first > 0){
+					if ($first % 2 == 0) {
+						$tableString .= '<tr class="even"><th class="label">Bemessungsspannung:</th><td class="data last">' . $bemessungsspannung . '</td></tr>';
+					}
+					else{
+						$tableString .= '<tr class="odd"><th class="label">Bemessungsspannung:</th><td class="data last">' . $bemessungsspannung . '</td></tr>';
+					}
+				}
+				else{
+					$tableString .= '<tr class="first odd"><th class="label">Bemessungsspannung:</th><td class="data last">' . $bemessungsspannung . '</td></tr>';
+				}
+				$first++;
+			}	
+
+			$tableString .= $endTableString;			
+			
+			echo $tableString;
+		 
+		 ?>
+		
     </div>
 <?php endif; ?>

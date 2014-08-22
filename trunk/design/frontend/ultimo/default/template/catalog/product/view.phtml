@@ -70,6 +70,8 @@
 
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+				<br/>
+				<h5 id="artnum">Artikelnummer: <?php echo $_product->getSku() ?><h5>
             </div>
             
             <?php echo $this->getReviewsSummaryHtml($_product, false, true); //reviews ?>
