@@ -100,9 +100,9 @@
 			<remove name="left.newsletter"/> <!-- Move newsletter to the footer -->
 			<action method="unsetChild"><name>tags_popular</name></action>
 
-			<block type="catalog/product_compare_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
+			<!--<block type="catalog/product_compare_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>-->
 			<block type="reports/product_compared" name="right.reports.product.compared" template="reports/product_compared.phtml" />
-			<block type="reports/product_viewed" name="left.reports.product.viewed" template="reports/product_viewed.phtml" />
+			<!--<block type="reports/product_viewed" name="left.reports.product.viewed" template="reports/product_viewed.phtml" />-->
 			
 			<block type="wishlist/customer_sidebar" name="wishlist_sidebar" as="wishlist" template="wishlist/sidebar.phtml"/>
 			<block type="poll/activePoll" name="right.poll">
@@ -393,9 +393,9 @@
 			<!-- Custom static blocks -->
 			<block type="cms/block" name="block_product_primary_bottom">
                 <action method="setBlockId"><block_id>block_product_primary_bottom</block_id></action>
-            </block>
-			<block type="cms/block" name="block_product_secondary_bottom">
-                <action method="setBlockId"><block_id>block_product_secondary_bottom</block_id></action>
+            </block>			
+			<block type="cms/block" name="banner_product_block">
+                <action method="setBlockId"><block_id>banner_product_block</block_id></action>
             </block>
 			<block type="cms/block" name="block_product_replace_related">
                 <action method="setBlockId"><block_id>block_product_replace_related</block_id></action>
@@ -704,6 +704,9 @@
 			<block type="cms/block" name="block_home_left1">
                 <action method="setBlockId"><block_id>block_home_left1</block_id></action>
             </block>
+			<block type="cms/block" name="home_banner_left_1">
+                <action method="setBlockId"><block_id>home_banner_left_1</block_id></action>
+            </block>
 			<block type="cms/block" name="block_home_left2">
                 <action method="setBlockId"><block_id>block_home_left2</block_id></action>
             </block>
@@ -725,8 +728,8 @@
 		</reference>
 		
 		<reference name="home_right">
-			<block type="cms/block" name="block_home_right1">
-                <action method="setBlockId"><block_id>block_home_right1</block_id></action>
+			<block type="cms/block" name="home_banner_right_1">
+                <action method="setBlockId"><block_id>home_banner_right_1</block_id></action>
             </block>
 			<block type="cms/block" name="block_home_right2">
                 <action method="setBlockId"><block_id>block_home_right2</block_id></action>

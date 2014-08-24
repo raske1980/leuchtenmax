@@ -32,9 +32,7 @@
 ?>
 
 <style media="screen" type="text/css">		
-		table#product-attribute-specs-table {display:none;}
-		div#descriptiondiv tr.odd {  }
-		div#descriptiondiv tr.even {background-color: #D7DBDE !important;}
+		
 </style>		
 
 <?php $_description = $this->getProduct()->getDescription(); ?>
@@ -45,6 +43,12 @@
 		<br/>
 		<br/>	
 
+		<p>
+			<?php 
+				
+			?>
+		</p>
+		
 		<?php
 			$leuchtmittel = $this->getProduct()->getResource()->getAttribute('leuchtmittel')->getFrontend()->getValue($this->getProduct());
 			$leuchtmittelinklusive = $this->getProduct()->getResource()->getAttribute('leuchtmittelinklusive')->getFrontend()->getValue($this->getProduct());
@@ -76,25 +80,8 @@
 		//]]>
 		</script>
 			
-		 <?php 		 
-				
-			$material = $this->getProduct()->getResource()->getAttribute('material')->getFrontend()->getValue($this->getProduct());
-			$farbe = $this->getProduct()->getResource()->getAttribute('farbe')->getFrontend()->getValue($this->getProduct());			
-			$fassung = $this->getProduct()->getResource()->getAttribute('fassung')->getFrontend()->getValue($this->getProduct());
-			$leistung = $this->getProduct()->getResource()->getAttribute('leistung')->getFrontend()->getValue($this->getProduct());
-			$betriebsspannung = $this->getProduct()->getResource()->getAttribute('betriebsspannung')->getFrontend()->getValue($this->getProduct());
-			$lange = $this->getProduct()->getResource()->getAttribute('lange')->getFrontend()->getValue($this->getProduct());
-			$breite = $this->getProduct()->getResource()->getAttribute('breite')->getFrontend()->getValue($this->getProduct());
-			$schwenkbereich = $this->getProduct()->getResource()->getAttribute('schwenkbereich')->getFrontend()->getValue($this->getProduct());
-			$drehbereich = $this->getProduct()->getResource()->getAttribute('drehbereich')->getFrontend()->getValue($this->getProduct());
-			$schutzklasse = $this->getProduct()->getResource()->getAttribute('schutzklasse')->getFrontend()->getValue($this->getProduct());
-			$einbautiefe = $this->getProduct()->getResource()->getAttribute('einbautiefe')->getFrontend()->getValue($this->getProduct());
-			$montageart = $this->getProduct()->getResource()->getAttribute('montageart')->getFrontend()->getValue($this->getProduct());
-			$bemerkung1 = $this->getProduct()->getResource()->getAttribute('bemerkung1')->getFrontend()->getValue($this->getProduct());
-			$bemerkung2 = $this->getProduct()->getResource()->getAttribute('bemerkung2')->getFrontend()->getValue($this->getProduct());
-			$bemerkung3 = $this->getProduct()->getResource()->getAttribute('bemerkung3')->getFrontend()->getValue($this->getProduct());
-			$bemessungsspannung = $this->getProduct()->getResource()->getAttribute('bemessungsspannung')->getFrontend()->getValue($this->getProduct());
-			
+		 <?php 	
+
 			$startTableString = '<table class="data-table" ><colgroup><col width="25%"><col></colgroup><tbody>';
 			$endTableString = '</tbody></table>';
 			$tableString = '';
@@ -102,237 +89,175 @@
 			$tableOdd = 'odd';
 			$tableEven = 'even';
 			
-			$tableString .= $startTableString;			
-			
-			if(!empty($material)){
-				$tableString .= '<tr class="first even"><th class="label">Material:</th><td class="data last">' . $material . '</td></tr>';
-				$first++;
-			}			
-
-			if(!empty($farbe)){
-				if($first > 0){
-					if ($first % 2 == 0) {						
-						$tableString .= '<tr class="even"><th class="label">Farbe:</th><td class="data last">' . $farbe . '</td></tr>';
-					}
+			$tableString .= $startTableString;		
+		 
+			$attributes = $this->getProduct()->getAttributes();
+			$visibleAttributes = array();
+			$sortedAttributes = array();
+			foreach ($attributes as $attribute) {
+				if ($attribute->getIsVisibleOnFront()) {
+					//$value = $attribute->getFrontend()->getValue($this->getProduct());						
+					// do something with $value here
+					//$attlabel = $attribute->getStoreLabel();
+					$attCode = $attribute->getAttributeCode();
+					//echo $attCode . '<br/>';
+					if($attCode == 'material' || $attCode == 'farbe' || $attCode == 'fassung' || 
+						$attCode == 'leistung' || $attCode == 'betriebsspannung' || $attCode == 'lange' ||
+						$attCode == 'breite'){
+						$sortedAttributes[$attCode] = $attribute;
+					}						
 					else{
-						$tableString .= '<tr class="odd"><th class="label">Farbe:</th><td class="data last">' . $farbe . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Farbe:</th><td class="data last">' . $farbe . '</td></tr>';
-				}
-				$first++;
-			}			
-			
-			if(!empty($fassung)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Fassung:</th><td class="data last">' . $fassung . '</td></tr>';
-					}
-					else{
-						$tableString .= '<tr class="odd"><th class="label">Fassung:</th><td class="data last">' . $fassung . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Fassung:</th><td class="data last">' . $fassung . '</td></tr>';
-				}
-				$first++;
+						$visibleAttributes[] = $attribute;
+					}												
+				}												
 			}			
 			
-			if(!empty($leistung)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Leistung:</th><td class="data last">' . $leistung . '</td></tr>';
-					}
-					else{
-						$tableString .= '<tr class="odd"><th class="label">Leistung:</th><td class="data last">' . $leistung . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Leistung:</th><td class="data last">' . $leistung . '</td></tr>';
-				}
-				$first++;
-			}			
+			if(isset($sortedAttributes['material'])){				
+				$sortedAttribute = $sortedAttributes['material'];
+				$attvalue = $sortedAttribute->getFrontend()->getValue($this->getProduct());
+				if(!empty($attvalue)){
+					$tableString .= '<tr class="first even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+					$first++;
+				}			
+			}
 			
-			if(!empty($betriebsspannung)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Betriebsspannung:</th><td class="data last">' . $betriebsspannung . '</td></tr>';
+			if(isset($sortedAttributes['farbe'])){
+				$sortedAttribute = $sortedAttributes['farbe'];
+				$attvalue = $sortedAttribute->getFrontend()->getValue($this->getProduct());
+				if(!empty($attvalue)){
+					if($first > 0){
+						if ($first % 2 == 0) {						
+							$tableString .= '<tr class="even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
+						else{
+							$tableString .= '<tr class="odd"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
 					}
 					else{
-						$tableString .= '<tr class="odd"><th class="label">Betriebsspannung:</th><td class="data last">' . $betriebsspannung . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Betriebsspannung:</th><td class="data last">' . $betriebsspannung . '</td></tr>';
-				}
-				$first++;
-			}			
+						$tableString .= '<tr class="first even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+					}								
+					$first++;
+				}				
+			}
 			
-			if(!empty($lange)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Länge:</th><td class="data last">' . $lange . '</td></tr>';
+			if(isset($sortedAttributes['fassung'])){
+				$sortedAttribute = $sortedAttributes['fassung'];
+				$attvalue = $sortedAttribute->getFrontend()->getValue($this->getProduct());
+				if(!empty($attvalue)){
+					if($first > 0){
+						if ($first % 2 == 0) {						
+							$tableString .= '<tr class="even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
+						else{
+							$tableString .= '<tr class="odd"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
 					}
 					else{
-						$tableString .= '<tr class="odd"><th class="label">Länge:</th><td class="data last">' . $lange . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Länge:</th><td class="data last">' . $lange . '</td></tr>';
-				}
-				$first++;
-			}			
+						$tableString .= '<tr class="first even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+					}								
+					$first++;
+				}				
+			}
 			
-			if(!empty($breite)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Breite:</th><td class="data last">' . $breite . '</td></tr>';
-					}
-					else{
-						$tableString .= '<tr class="odd"><th class="label">Breite:</th><td class="data last">' . $breite . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Breite:</th><td class="data last">' . $breite . '</td></tr>';
-				}
-				$first++;
-			}			
 			
-			if(!empty($schwenkbereich)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Schwenkbereich:</th><td class="data last">' . $schwenkbereich . '</td></tr>';
+			if(isset($sortedAttributes['leistung'])){
+				$sortedAttribute = $sortedAttributes['leistung'];
+				$attvalue = $sortedAttribute->getFrontend()->getValue($this->getProduct());
+				if(!empty($attvalue)){
+					if($first > 0){
+						if ($first % 2 == 0) {						
+							$tableString .= '<tr class="even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
+						else{
+							$tableString .= '<tr class="odd"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
 					}
 					else{
-						$tableString .= '<tr class="odd"><th class="label">Schwenkbereich:</th><td class="data last">' . $schwenkbereich . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Schwenkbereich:</th><td class="data last">' . $schwenkbereich . '</td></tr>';
-				}
-				$first++;
-			}			
+						$tableString .= '<tr class="first even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+					}								
+					$first++;
+				}				
+			}
 			
-			if(!empty($drehbereich)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Drehbereich:</th><td class="data last">' . $drehbereich . '</td></tr>';
+			if(isset($sortedAttributes['betriebsspannung'])){
+				$sortedAttribute = $sortedAttributes['betriebsspannung'];
+				$attvalue = $sortedAttribute->getFrontend()->getValue($this->getProduct());
+				if(!empty($attvalue)){
+					if($first > 0){
+						if ($first % 2 == 0) {						
+							$tableString .= '<tr class="even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
+						else{
+							$tableString .= '<tr class="odd"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
 					}
 					else{
-						$tableString .= '<tr class="odd"><th class="label">Drehbereich:</th><td class="data last">' . $drehbereich . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Drehbereich:</th><td class="data last">' . $drehbereich . '</td></tr>';
-				}
-				$first++;
-			}			
+						$tableString .= '<tr class="first even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+					}								
+					$first++;
+				}				
+			}
 			
-			if(!empty($schutzklasse)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Schutzklasse:</th><td class="data last">' . $schutzklasse . '</td></tr>';
+			if(isset($sortedAttributes['lange'])){
+				$sortedAttribute = $sortedAttributes['lange'];
+				$attvalue = $sortedAttribute->getFrontend()->getValue($this->getProduct());
+				if(!empty($attvalue)){
+					if($first > 0){
+						if ($first % 2 == 0) {						
+							$tableString .= '<tr class="even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
+						else{
+							$tableString .= '<tr class="odd"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
 					}
 					else{
-						$tableString .= '<tr class="odd"><th class="label">Schutzklasse:</th><td class="data last">' . $schutzklasse . '</td></tr>';
-					}
+						$tableString .= '<tr class="first even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+					}								
+					$first++;
 				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Schutzklasse:</th><td class="data last">' . $schutzklasse . '</td></tr>';
-				}
-				$first++;
-			}			
+				
+			}
 			
-			if(!empty($einbautiefe)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Einbautiefe in mm:</th><td class="data last">' . $einbautiefe . '</td></tr>';
+			if(isset($sortedAttributes['breite'])){
+				$sortedAttribute = $sortedAttributes['breite'];
+				$attvalue = $sortedAttribute->getFrontend()->getValue($this->getProduct());
+				if(!empty($attvalue)){
+					if($first > 0){
+						if ($first % 2 == 0) {						
+							$tableString .= '<tr class="even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
+						else{
+							$tableString .= '<tr class="odd"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
 					}
 					else{
-						$tableString .= '<tr class="odd"><th class="label">Einbautiefe in mm:</th><td class="data last">' . $einbautiefe . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Einbautiefe in mm:</th><td class="data last">' . $einbautiefe . '</td></tr>';
-				}
-				$first++;
-			}			
-			
-			if(!empty($montageart)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Montageart:</th><td class="data last">' . $montageart . '</td></tr>';
-					}
-					else{
-						$tableString .= '<tr class="odd"><th class="label">Montageart:</th><td class="data last">' . $montageart . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Montageart:</th><td class="data last">' . $montageart . '</td></tr>';
-				}
-				$first++;
-			}			
-			
-			if(!empty($bemerkung1)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Bemerkung 1:</th><td class="data last">' . $bemerkung1 . '</td></tr>';
-					}
-					else{
-						$tableString .= '<tr class="odd"><th class="label">Bemerkung 1:</th><td class="data last">' . $bemerkung1 . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Bemerkung 1:</th><td class="data last">' . $bemerkung1 . '</td></tr>';
-				}
-				$first++;
-			}			
-			
-			if(!empty($bemerkung2)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Bemerkung 2:</th><td class="data last">' . $bemerkung2 . '</td></tr>';
-					}
-					else{
-						$tableString .= '<tr class="odd"><th class="label">Bemerkung 2:</th><td class="data last">' . $bemerkung2 . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Bemerkung 2:</th><td class="data last">' . $bemerkung2 . '</td></tr>';
-				}
-				$first++;
-			}			
-			
-			if(!empty($bemerkung3)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Bemerkung 3:</th><td class="data last">' . $bemerkung3 . '</td></tr>';
-					}
-					else{
-						$tableString .= '<tr class="odd"><th class="label">Bemerkung 3:</th><td class="data last">' . $bemerkung3 . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Bemerkung 3:</th><td class="data last">' . $bemerkung3 . '</td></tr>';
-				}
-				$first++;
-			}			
-			
-			if(!empty($bemessungsspannung)){
-				if($first > 0){
-					if ($first % 2 == 0) {
-						$tableString .= '<tr class="even"><th class="label">Bemessungsspannung:</th><td class="data last">' . $bemessungsspannung . '</td></tr>';
-					}
-					else{
-						$tableString .= '<tr class="odd"><th class="label">Bemessungsspannung:</th><td class="data last">' . $bemessungsspannung . '</td></tr>';
-					}
-				}
-				else{
-					$tableString .= '<tr class="first odd"><th class="label">Bemessungsspannung:</th><td class="data last">' . $bemessungsspannung . '</td></tr>';
-				}
-				$first++;
+						$tableString .= '<tr class="first even"><th class="label">' . $sortedAttribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+					}								
+					$first++;
+				}				
 			}	
+
+			foreach ($visibleAttributes as $attribute) {
+				$attvalue = $attribute->getFrontend()->getValue($this->getProduct());
+				$attCode = $attribute->getAttributeCode();
+				if($attCode == 'leuchtmittel' || $attCode == 'leuchtmittelinklusive'){
+					continue;
+				}
+				if(!empty($attvalue)){
+					if($first > 0){
+						if ($first % 2 == 0) {						
+							$tableString .= '<tr class="even"><th class="label">' . $attribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
+						else{
+							$tableString .= '<tr class="odd"><th class="label">' . $attribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+						}
+					}
+					else{
+						$tableString .= '<tr class="first even"><th class="label">' . $attribute->getStoreLabel() . '</th><td class="data last">' . $attvalue . '</td></tr>';
+					}								
+					$first++;
+				}				
+			}				
 
 			$tableString .= $endTableString;			
 			

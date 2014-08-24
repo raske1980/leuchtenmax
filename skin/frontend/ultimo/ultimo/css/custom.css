@@ -1,0 +1,47 @@
+/**
+ * File for custom CSS. You can use it to override the default styling of the theme.
+ *
+ * 1. Copy the file "default.custom.css" and rename it to "custom.css".
+ *    Otherwise this file will not be loded by Magento.
+ * 2. Enable it in the admin panel.
+ * 3. Uncomment slected classes or add your own CSS to override the default styling of the theme.
+ *
+ * Please refer to the user guide for more details.
+ *
+ */
+
+/* Product
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+/* Product labels
+-------------------------------------------------------------- */
+
+/*
+.sticker.new {
+	background-color:#888;
+	color:#fff;
+}
+.sticker.sale {
+	background-color:#333;
+	color:#fff;
+}
+*/
+
+#categorycarouseldiv div.viewport ul {width: inherit !important;height: inherit !important;}
+#categorycarouseldiv div.viewport {height: inherit !important;}
+#categorycarouseldiv div.itemslider-vertical {height: inherit !important;}
+#categorycarouseldiv div.itemslider-wrapper {height: inherit !important;}
+#categorycarouseldiv div.block-related-slider {height: inherit !important;}		
+div.box-additional.box-tabs.grid-full {margin-right:0% !important;}		
+div.related-itemslider-wrapper h3.product-name,
+div.upsell-itemslider-wrapper h3.product-name, 
+#categorycarouseldiv h3.product-name { font-size: 1.2em !important;margin-left:8% !important;}	
+div.product-view div.product-name h1 { font-size: 1.7em !important;}	
+table#product-attribute-specs-table {display:none;}
+div#descriptiondiv tr.odd {  }
+div#descriptiondiv tr.even {background-color: #EBEBEB !important;}
+div.product-view.nested-container div.product-type-data div.price-box .price { color: #f9b000 !important;}
+div.box-additional.box-tabs.grid-full {margin-top: 66px;}
+div#categorycarouseldiv {margin-top: 60px;}
+div.product-img-box.grid12-4, div.product-shop.grid12-5 {height:520px;}

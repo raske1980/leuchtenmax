@@ -133,8 +133,8 @@
 						<div class="feature-wrapper bottom-border"><?php echo $tmpHtml; ?></div>
                     <?php endif; ?>
                     
-                    <?php if ($tmpHtml = $this->getChildHtml('block_product_secondary_bottom')): ?>
-                        <div class="block_product_secondary_bottom"><?php echo $tmpHtml; ?></div>
+                    <?php if ($tmpHtml = $this->getChildHtml('banner_product_block')): ?>
+                        <div class="banner_product_block"><?php echo $tmpHtml; ?></div>
                     <?php endif; ?>
                     
                     <?php //echo $this->getChildHtml('additional'); ?>
@@ -335,21 +335,11 @@
 	?>	
 	
 	<style media="screen" type="text/css">		
-		#categorycarouseldiv div.viewport ul {width: inherit !important;height: inherit !important;}
-		#categorycarouseldiv div.viewport {height: inherit !important;}
-		#categorycarouseldiv div.itemslider-vertical {height: inherit !important;}
-		#categorycarouseldiv div.itemslider-wrapper {height: inherit !important;}
-		#categorycarouseldiv div.block-related-slider {height: inherit !important;}		
-		div.box-additional.box-tabs.grid-full {margin-right:0% !important;}		
-		div.related-itemslider-wrapper h3.product-name,
-		div.upsell-itemslider-wrapper h3.product-name, 
-		#categorycarouseldiv h3.product-name 
-		{ font-size: 1.2em !important;margin-left:8% !important;}	
-		div.product-view div.product-name h1 { font-size: 2.0em !important;}	
+		
 	</style>		
 	
 	<?php if($_collectionSize > 0): ?>
-	<div id="categorycarouseldiv" style="float: left;width: 32%;margin-top: 8.4%;margin-bottom:60px;height: 1000px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
+	<div id="categorycarouseldiv" style="float: left;width: 32%;margin-bottom:60px;height: 1000px;border-left: 1px solid #e5e5e5;border-right: 1px solid #e5e5e5;">
 		
 	<div class="block block-related-slider">
 		<h3 class="section-title padding-right" style="border-top: 1px solid #e5e5e5;"><span style="margin-left: 25% !important;font: 98%/150% Arial, Helvetica, sans-serif;line-height: 2.0em;">Ähnliche Artikel</span></h3>
