@@ -1,0 +1,114 @@
+/**
+ * Drop-down
+ */
+
+
+
+/* Caret
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+.caret {
+	display:inline-block;
+	width:0;
+	height:0;
+	margin-bottom:2px;
+	vertical-align:middle;
+	content:"";
+	
+	border-style:solid solid none;
+	border-width:4px 4px 0;
+	border-color:#333 transparent transparent;
+}
+/*.caret-right {
+	border-style:solid none solid solid;
+	border-width:4px 0 4px 4px;
+	border-color:transparent transparent transparent #333;
+}*/
+
+
+
+/* Dropdown box %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
+
+.dropdown { position:relative; }
+.dropdown:hover { z-index:4000; }
+
+/* Dropdown toggle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+.dropdown-toggle {
+	display:block;
+}
+
+/* Inside Dropdown-toggle
+-------------------------------------------------------------- */
+.dropdown-toggle * { display:inline-block; }
+.dropdown-toggle .label { padding-right:2px; }
+.dropdown-toggle .value {}
+.dropdown-toggle .icon {
+	width:18px;
+	text-indent:-9999px;
+	background-position:0 50%;
+	background-repeat:no-repeat;
+}
+.dropdown-toggle .img-caret {
+	background:url(../../../images/infortis/_shared/dropdown/arrow-dropdown.png) 100% 50% no-repeat;
+	width:10px;
+	text-indent:-9999px;
+}
+
+
+/* Cover 'dropdown-toggle' (and 'dropdown-menu' shadow) with additional inner div
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+		.dropdown-toggle.cover > div { padding:0 10px; }
+.open > .dropdown-toggle.cover > div { background-color:#fff; }
+/*.dropdown:hover .dropdown-toggle.cover > div,*/
+.open > .dropdown-toggle.cover > div {
+	z-index:4001;
+	position:relative;
+}
+
+
+/* Dropdown menu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+.dropdown-menu {
+	display:none;
+	position:absolute;
+	top:100%;
+	left:0;
+	z-index:4000;
+	padding:20px;
+	min-width:130px;
+	line-height:1.5em;
+	text-align:left;
+
+	list-style:none;
+	background-color:#fff;
+}
+.dropdown-menu.left-hand {
+	left:auto;
+	right:0;
+}
+
+/* When dropdown menu is an unordered list
+-------------------------------------------------------------- */
+/* Everything is inline-block, except links */
+.dropdown-menu > li * { display:inline-block; }
+.dropdown-menu > li > a { display:block; }
+
+.dropdown-menu > li { white-space:nowrap; }
+.dropdown-menu > li .label { margin-right:8px; }
+.dropdown-menu .icon {
+	width:18px;
+	text-indent:-9999px;
+	background-position:0 50%;
+	background-repeat:no-repeat;
+}
+
+
+/* Clickable
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+.clickable-dropdown {}
