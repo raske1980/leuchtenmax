@@ -45,3 +45,34 @@ div.product-view.nested-container div.product-type-data div.price-box .price { c
 div.box-additional.box-tabs.grid-full {margin-top: 66px;}
 div#categorycarouseldiv {margin-top: 60px;}
 div.product-img-box.grid12-4, div.product-shop.grid12-5 {height:520px;}
+#nav > li:hover > a, .vertnav-top li > a:hover {
+background-color: #faa102;
+color: #ffffff;
+}
+
+#nav > li.active > a, .vertnav-top li.current > a {
+background-color: #ce0814;
+color: #ffffff;
+}
+
+#nav, .vertnav-top {
+border-bottom: 5px solid #ce0814;
+}
+
+#nav ul li a:hover {
+color: #faa102;
+}
+
+.cms-index-index #nav #nav-home-link > a,
+#nav > li.active > a,
+.vertnav-top li.current > a
+{
+	background-color: #ce0814;
+	color: #ffffff;
+}
+
+a:hover,
+.vertnav-side li.current > a { color: #faa102; }
+
+div.category-products .price-box .price, div#categorycarouseldiv .price-box .price { color: #faa102; }
+#leuchtmittelinklusivelink {color:#faa102;}
